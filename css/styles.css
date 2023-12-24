@@ -7,4 +7,30 @@
 body {
     height: 100vh;
     background-color: black;
+    display: grid;
+    justify-content: center;
+    align-items: center;
 }
+
+.game {
+    height: 50%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.play-board {
+    height: 300px;
+    width: 300px;
+    border: 1px solid white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.message {
+    color: white;
+    text-align: center;
+    font-size: 32px;
+}
+
