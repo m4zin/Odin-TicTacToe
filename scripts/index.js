@@ -123,13 +123,20 @@ function playGame(arr) {
 
     for(let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', (e) => {
-            clickedCount++
+
+            if(!e.target.innerHTML) {
+                clickedCount++
+            }
+
             // When button is clicked, run the below func.
             // This func is stored in an anonymous func / 
             // so it wouldn't be called unless clicked.
             inputFromPlayer(e, arr)
             // If it's a tie.
             if(clickedCount == 9 && (!winningPlayer)) {
+
+
+
                 message.innerHTML = 'Its a tie!'
                 addReloadBtn()
                 return
