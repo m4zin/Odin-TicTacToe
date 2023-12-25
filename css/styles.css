@@ -23,6 +23,7 @@ body {
     height: 300px;
     width: 300px;
     border: 1px solid white;
+    border-radius: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
@@ -32,5 +33,21 @@ body {
     color: white;
     text-align: center;
     font-size: 32px;
+}
+
+.game .play-board button {
+    font-size: 32px;
+}
+
+.restart {
+    color: white;
+    text-align: center;
+    font-size: 32px;
+}
+
+.restart .restart-button {
+    height: 50px;
+    width: 100px;
+    font-size: 24px;
 }
 

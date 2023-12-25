@@ -48,38 +48,27 @@ function checkFirstWin(arr) {
             if(results[key] == true) {
                 if(winPatterns[key].includes('x')) {
                     xWin = true
-                    return {xWin, oWin}
                 } else {
                     oWin = true
-                    return {xWin, oWin}
                 }
-            }
+                return {xWin, oWin}
+            } 
         }
     }
 }
 
 function inputFromPlayer(e, arr) {
-    let winningPlayer = checkFirstWin(arr)
-
-    // If either player won, stop the game.
-    if(winningPlayer) {
-        if(winningPlayer.xWin == true) {
-            message.innerHTML = 'X wins!'
-            return
-        } else if(winningPlayer.oWin == true) {
-            message.innerHTML = 'O wins!'
-            return
-        }
-    }
-
     // If button already clicked before
     if(e.target.innerHTML) {
         return;
     }
 
-    // for DEBUG
-    console.log(winningPlayer)
-    console.log(e.target.value)
+    // If object is not empty.
+    for (const key in winningPlayer) {
+        if(winningPlayer.hasOwnProperty(key)) {
+            return
+        }
+    }
 
     // Getting values from value attribute to retrieve respective /
     // 2D array indeces.
@@ -91,49 +80,73 @@ function inputFromPlayer(e, arr) {
     // First play is for X
     if(playerTurn.length === 0) {
         e.target.innerHTML = 'X'
+        e.target.style.color = 'red'
         // Placing value in index for checking win as the game goes on.
         arr[row][col] = 'x'
         // Pushing into player turn to switch next player's turn.
         playerTurn.push('x')
-
-        console.log(arr)
-
-        return
-    }
-
-    if(playerTurn[0] == 'x') {
+    } else if(playerTurn[0] == 'x') {
         e.target.innerHTML = 'O'
+        e.target.style.color = 'blue'
         arr[row][col] = 'o'
         playerTurn.pop()
         playerTurn.push('o')
-
-        console.log(arr)
-
-        return
-    }
-
-    if(playerTurn[0] == 'o') {
+    } else if(playerTurn[0] == 'o') {
         e.target.innerHTML = 'X'
+        e.target.style.color = 'red'
         arr[row][col] = 'x'
         playerTurn.pop()
         playerTurn.push('x')
+    }
 
-        console.log(arr)
+    // Checking for winning pattern.
+    winningPlayer = checkFirstWin(arr)
 
+    // If either player won, stop the game.
+    if(winningPlayer) {
+        if(winningPlayer.xWin == true) {
+            message.innerHTML = 'X wins!'
+        } else if(winningPlayer.oWin == true) {
+            message.innerHTML = 'O wins!'
+        }
+        storeWinningPlayer = winningPlayer
+        addReloadBtn()
         return
     }
 
 }
 
 function playGame(arr) {
+
+    // To track for game ties.
+    let clickedCount = 0;
+
     for(let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', (e) => {
+            clickedCount++
             // When button is clicked, run the below func.
             // This func is stored in an anonymous func / 
             // so it wouldn't be called unless clicked.
             inputFromPlayer(e, arr)
+            // If it's a tie.
+            if(clickedCount == 9 && (!winningPlayer)) {
+                message.innerHTML = 'Its a tie!'
+                addReloadBtn()
+                return
+            }
         })
     }
+}
+
+function addReloadBtn() {
+    let restartBtn = document.createElement('button')
+    restartBtn.className = 'restart-button'
+    restartBtn.innerHTML = 'restart'
+    restartDiv.append(restartBtn)
+
+    restartBtn.addEventListener('click', () => {
+        location.reload()
+    })
 }
 
 let boardArr = [
@@ -141,10 +154,14 @@ let boardArr = [
     ['','',''],
     ['','','']
 ]
-let playerTurn = []
 
-const buttons = document.querySelectorAll('button')
+const buttons = document.querySelectorAll('.play-button')
 const message = document.querySelector('.message')
+const restartDiv = document.querySelector('.restart')
+
+let playerTurn = []
+let winningPlayer = {}
+let storeWinningPlayer = {};
 
 playGame(boardArr)
 
