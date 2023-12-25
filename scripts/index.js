@@ -109,7 +109,6 @@ function inputFromPlayer(e, arr) {
         } else if(winningPlayer.oWin == true) {
             message.innerHTML = 'O wins!'
         }
-        storeWinningPlayer = winningPlayer
         addReloadBtn()
         return
     }
@@ -165,6 +164,5 @@ const restartDiv = document.querySelector('.restart')
 
 let playerTurn = []
 let winningPlayer = {}
-let storeWinningPlayer = {};
 
 playGame(boardArr)
