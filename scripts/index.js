@@ -134,9 +134,6 @@ function playGame(arr) {
             inputFromPlayer(e, arr)
             // If it's a tie.
             if(clickedCount == 9 && (!winningPlayer)) {
-
-
-
                 message.innerHTML = 'Its a tie!'
                 addReloadBtn()
                 return
@@ -171,4 +168,3 @@ let winningPlayer = {}
 let storeWinningPlayer = {};
 
 playGame(boardArr)
-
